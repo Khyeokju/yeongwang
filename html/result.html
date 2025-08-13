@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>최종 결과</title>
+  <link rel="stylesheet" href="../css/result.css" />
+
+  <!-- Firebase SDK -->
+  <script src="../js/config.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+  <!-- QR 코드 + html2canvas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div id="capture-area">
+      <img src="../images/egen2.png" id="result-bg" alt="결과 배경" crossorigin="anonymous" />
+
+      <div id="photo-area">
+        <div id="countdown">7</div>
+
+        <div id="photo-box">
+          <video id="webcam" autoplay playsinline></video>
+          <canvas id="snapshot" style="display:none;"></canvas>
+          <img id="captured-image" alt="캡처된 이미지" style="display:none;" />
+        </div>
+
+       <div id="qrcode"></div>
+    </div>
+  </div>
+</div>
+      <div id="description-box"></div>
+    </div>
+  </div>
+<button class="btn home-btn" onclick="location.href='/index.html'"><span>HOME</span></button>
+
+  <script src="../js/result.js"></script>
+</body>
+</html>

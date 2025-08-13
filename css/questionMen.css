@@ -1,0 +1,199 @@
+
+/* Amatic SC (영문 필기체) + 나눔펜스크립트 (한글 손글씨) */
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC&family=Nanum+Pen+Script&display=swap');
+
+body {
+  margin: 0;
+  height: 100%;
+  background-image: url("../images/camping2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: 'Amatic SC', 'Nanum Pen Script', cursive;
+}
+
+#questionTextWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+#questionText {
+  background-color: rgba(0, 0, 0, 0.6);  /* 반투명 배경 */
+  color: white;
+  padding: 20px 40px;
+  border-radius: 16px;
+  font-size: 90px;
+  text-align: center;
+  font-family: 'Nanum Pen Script', cursive;
+  margin: 0 auto;
+}
+
+
+
+
+.button_container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 20%;
+}
+
+.description, .link {
+  font-family: 'Amatic SC', 'Nanum Pen Script', cursive;
+  text-align: center;
+}
+
+.description {
+  font-size: 85px;
+}
+
+.btn {
+  border: none;
+  display: inline-flex;
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+  font-size: 42px;         
+  background-color: #222;
+  padding: 22px 80px;      
+  margin: 0;
+  border-radius: 12px;     
+  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+  font-family: 'Amatic SC', 'Nanum Pen Script', cursive;
+}
+
+
+.btn span {
+  position: relative; 
+  z-index: 1;
+}
+
+.btn:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 390%;
+  width: 170%;
+  background: #78c7d2;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+  transform: translateX(-98%) translateY(-25%) rotate(45deg);
+}
+
+.btn:hover:after {
+  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+
+.link {
+  font-size: 20px;
+  margin-top: 30px;
+}
+
+.link a {
+  color: #000;
+  font-size: 25px; 
+}
+
+ .gender-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 0px;
+      margin: 30px 0;
+    }
+    
+#answerButtons {
+  display: flex;
+  justify-content: center;
+  gap: 200px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+
+.answer-btn {
+  padding: 20px 50px;
+  font-size: 36px;
+}
+.yes-btn {
+  background-color: #4CAF50; 
+}
+
+.no-btn {
+  background-color: #f44336; 
+}
+
+.yes-btn::after {
+  background: #81c784;
+}
+
+.no-btn::after {
+  background: #ef9a9a;
+}
+.yes-btn:hover::after {
+  transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+
+.no-btn:hover::after {
+  transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+.progress {
+  font-size: 68px;
+  text-align: center;
+  margin-bottom: 0px;
+  font-family: 'Amatic SC', 'Nanum Pen Script', cursive;
+}
+#progressText {
+  font-size: 68px;
+  text-align: center;
+  margin-bottom: 4px;
+  font-family: 'Amatic SC', 'Nanum Pen Script', cursive;
+}
+
+#questionText {
+  font-size: 90px;
+  text-align: center;
+  font-family: 'Nanum Pen Script', cursive;
+  margin-top: 0px;
+  margin-bottom: 30px; /* 버튼과의 거리 */
+}
+.back-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 12px 24px;
+  font-size: 40px;
+  background-color: #444;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  z-index: 10;
+  font-family: 'Amatic SC', 'Nanum Pen Script', cursive;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #666;
+}
+.situation-header {
+  position: absolute;
+  top: 150px;
+  width: 100%;
+  text-align: center;
+  font-size: 78px;
+  color: #ffffff;
+  font-family: 'Nanum Pen Script', cursive;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
