@@ -42,7 +42,7 @@ function initCameraAndCapture() {
         img.style.display = "block";
         countdownEl.style.display = "none";
 
-        console.log("캡처 완료 → 전체 프레임 업로드 시작");
+        console.log("전체 프레임 업로드 시작");
         showQRLoading(); // 로딩 표시 함수 호출
         captureFullFrameAndUpload();
       }
@@ -64,14 +64,14 @@ function captureFullFrameAndUpload() {
     }).then(canvas => {
       canvas.toBlob(blob => {
         if (!blob) {
-          console.error("❌ Blob 생성 실패");
+          console.error("Blob 생성 실패");
           return;
         }
 
         const fileName = `results/${Date.now()}.png`;
         const storageRef = storage.ref().child(fileName);
 
-        console.log("Firebase Storage 업로드 시작...");
+        console.log("Firebase Storage 업로드 시작");
 
         storageRef.put(blob).then(snapshot => {
           console.log("업로드 완료:", snapshot);

@@ -9,7 +9,7 @@ firebase-debug.*.log*
 
 # Firebase cache
 .firebase/
-# Firebase config (로컬에만 둠)
+# Firebase config
 js/config.js
 
 # Firebase config
