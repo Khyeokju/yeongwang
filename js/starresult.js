@@ -41,7 +41,10 @@ function initCameraAndCapture() {
         canvas.width = videoWidth;
         canvas.height = videoHeight;
 
-        canvas.getContext("2d").drawImage(
+        const ctx = canvas.getContext("2d");
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
+        ctx.drawImage(
           video,
           0, cropTop,
           videoWidth, cropHeight,
@@ -49,8 +52,8 @@ function initCameraAndCapture() {
           canvas.width, canvas.height
         );
 
-        // 고품질 JPEG로 저장 (PNG보다 파일 크기 작고 품질 좋음)
-        const dataUrl = canvas.toDataURL("image/jpeg", 0.95);
+        // 무손실에 가까운 PNG로 유지하여 중간 단계 압축 손실 방지
+        const dataUrl = canvas.toDataURL("image/png");
 
         stream.getTracks().forEach(track => track.stop());
         video.style.display = "none";
@@ -80,9 +83,20 @@ function captureFullFrameAndUpload() {
 
   video.remove();
 
-  setTimeout(() => {
+  const img = document.getElementById("captured-image");
+
+  const startHtml2Canvas = () => {
+    const targetScale = (() => {
+      if (img && img.naturalWidth && img.clientWidth) {
+        const ratio = img.naturalWidth / Math.max(1, img.clientWidth);
+        return Math.max(1.5, Math.min(3, ratio));
+      }
+      return Math.min((window.devicePixelRatio || 1), 2);
+    })();
     html2canvas(area, {
       useCORS: true,
+      backgroundColor: null,
+      scale: targetScale
     }).then(canvas => {
       canvas.toBlob(blob => {
         if (!blob) {
@@ -130,7 +144,16 @@ function captureFullFrameAndUpload() {
     }).catch(err => {
       console.error("html2canvas 실패:", err);
     });
-  }, 300);
+  };
+
+  if (img && img.complete) {
+    startHtml2Canvas();
+  } else if (img) {
+    img.onload = startHtml2Canvas;
+  } else {
+    // 안전장치: 이미지 엘리먼트가 없을 경우 기존 방식 유지
+    setTimeout(startHtml2Canvas, 300);
+  }
 }
 
 function showQRLoading() {
