@@ -17,6 +17,65 @@ let currentQuestion = 0;
 let totalScore = 0;
 let answers = []; // 답변 기록 저장
 
+// 이미지 프리로딩 함수
+function preloadImages() {
+    const images = [];
+    for (let i = 1; i <= 10; i++) {
+        const img = new Image();
+        img.src = `../images/star${i}.png`;
+        images.push(img);
+    }
+    return images;
+}
+
+// 페이지 로드 시 이미지 프리로딩
+const preloadedImages = preloadImages();
+
+// 배경 이미지 변경 함수
+function changeBackgroundImage(questionNumber) {
+    // 부드러운 배경 전환을 위한 fade 효과
+    document.body.style.transition = 'opacity 0.3s ease-in-out';
+    document.body.style.opacity = '0.3';
+    
+    setTimeout(() => {
+        document.body.style.backgroundImage = `url("../images/star${questionNumber}.png")`;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+        document.body.style.backgroundRepeat = 'no-repeat';
+        
+        setTimeout(() => {
+            document.body.style.opacity = '1';
+        }, 50);
+    }, 300);
+}
+
+// 분석 중 화면 표시 함수
+function showAnalysisScreen() {
+    // 기존 질문 컨테이너 숨기기
+    const questionContainer = document.querySelector('.question-container');
+    if (questionContainer) {
+        questionContainer.style.display = 'none';
+    }
+    
+    // 분석 중 화면 생성
+    const analysisScreen = document.createElement('div');
+    analysisScreen.id = 'analysis-screen';
+    analysisScreen.innerHTML = `
+        <div class="analysis-content">
+            <div class="analysis-icon">✨</div>
+            <div class="analysis-text">분석 중이니 조금만 기다려주세요...</div>
+            <div class="analysis-subtitle">당신의 별자리를 찾고 있어요</div>
+            <div class="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(analysisScreen);
+}
+
 // 답변 처리 함수
 function handleAnswer(answer) {
     // 답변 기록 저장
@@ -33,12 +92,18 @@ function handleAnswer(answer) {
     
     // 다음 질문이 있으면 배경 이미지 변경
     if (currentQuestion < 10) {
-        // 부드러운 배경 전환을 위한 fade 효과
-        document.body.style.opacity = '0.7';
-        setTimeout(() => {
-            document.body.style.backgroundImage = `url("../images/star${currentQuestion + 1}.png")`;
-            document.body.style.opacity = '1';
-        }, 200);
+        // 프리로딩된 이미지 사용
+        const nextImage = preloadedImages[currentQuestion];
+        
+        if (nextImage.complete) {
+            // 이미 로드된 경우 즉시 전환
+            changeBackgroundImage(currentQuestion + 1);
+        } else {
+            // 아직 로딩 중인 경우 로드 완료 후 전환
+            nextImage.onload = () => {
+                changeBackgroundImage(currentQuestion + 1);
+            };
+        }
     } else {
         // 10번째 질문 완료 후 결과 페이지로 이동
         // 12가지 별자리가 균등하게 나올 수 있도록 설계
@@ -81,11 +146,16 @@ function handleAnswer(answer) {
             personality = '독창적이고 혁신적인 사고를 가진 독립적인 성격입니다. 인도주의적이고 진보적인 가치관을 가지고 있으며, 친구들과의 관계를 중시합니다.';
         }
         
+        // 분석 중 화면 표시
+        showAnalysisScreen();
+        
         // 결과를 localStorage에 저장하고 결과 페이지로 이동
-        localStorage.setItem('starResult', result);
-        localStorage.setItem('starConstellation', result); // 별자리 이름도 별도로 저장
-        localStorage.setItem('starPersonality', personality);
-        location.href = './starresult.html';
+        setTimeout(() => {
+            localStorage.setItem('starResult', result);
+            localStorage.setItem('starConstellation', result); // 별자리 이름도 별도로 저장
+            localStorage.setItem('starPersonality', personality);
+            location.href = './starresult.html';
+        }, 2000); // 2초 후 결과 페이지로 이동
     }
 }
 
@@ -110,10 +180,6 @@ function goBack() {
         answers[currentQuestion] = undefined;
         
         // 이전 질문 배경으로 변경
-        document.body.style.opacity = '0.7';
-        setTimeout(() => {
-            document.body.style.backgroundImage = `url("../images/star${currentQuestion + 1}.png")`;
-            document.body.style.opacity = '1';
-        }, 200);
+        changeBackgroundImage(currentQuestion + 1);
     }
 }

@@ -7,8 +7,23 @@ function initCameraAndCapture() {
   const img = document.getElementById("captured-image");
   const countdownEl = document.getElementById("countdown");
 
-  navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+  // 고화질 카메라 설정
+  const constraints = {
+    video: {
+      width: { ideal: 1920, min: 1280 },
+      height: { ideal: 1080, min: 720 },
+      frameRate: { ideal: 30, min: 15 },
+      facingMode: "user"
+    }
+  };
+
+  navigator.mediaDevices.getUserMedia(constraints).then(stream => {
     video.srcObject = stream;
+    
+    // 카메라 해상도 정보 표시 (디버깅용)
+    video.onloadedmetadata = () => {
+      console.log(`카메라 해상도: ${video.videoWidth}x${video.videoHeight}`);
+    };
 
     let timeLeft = 7;
     countdownEl.textContent = timeLeft; 
@@ -34,13 +49,19 @@ function initCameraAndCapture() {
           canvas.width, canvas.height
         );
 
-        const dataUrl = canvas.toDataURL("image/png");
+        // 고품질 JPEG로 저장 (PNG보다 파일 크기 작고 품질 좋음)
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.95);
 
         stream.getTracks().forEach(track => track.stop());
         video.style.display = "none";
         img.src = dataUrl;
         img.style.display = "block";
         countdownEl.style.display = "none";
+
+        // QR코드 영역 초기화 및 안내문구 제거
+        const qrContainer = document.getElementById("qrcode");
+        qrContainer.innerHTML = "";
+        qrContainer.classList.add("qr-active"); // 안내문구 숨기는 클래스 추가
 
         console.log("전체 프레임 업로드 시작");
         showQRLoading(); // 로딩 표시 함수 호출
@@ -49,6 +70,7 @@ function initCameraAndCapture() {
     }, 2000);
   }).catch(err => {
     console.error("카메라 접근 실패:", err);
+    alert("카메라에 접근할 수 없습니다. 카메라 권한을 확인해주세요.");
   });
 }
 
@@ -92,7 +114,14 @@ function captureFullFrameAndUpload() {
 
           const text = document.createElement("div");
           text.id = "qr-text";
-          text.innerText = "QR코드로 파일을 다운로드 하세요!";
+          text.innerHTML = `
+            <div style="font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
+              ✨ 별자리 결과를 저장하세요 ✨
+            </div>
+            <div style="font-size: 0.9rem; color: #e8f4fd; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+              QR코드를 스캔하여<br>나만의 별자리 사진을 다운로드
+            </div>
+          `;
           qrContainer.appendChild(text);
         }).catch(err => {
           console.error("Firebase 업로드 실패:", err);
@@ -107,15 +136,22 @@ function captureFullFrameAndUpload() {
 function showQRLoading() {
   const qrContainer = document.getElementById("qrcode");
   qrContainer.innerHTML = `
-    <img id="qr-loading" src="../images/loading.gif" alt="로딩 중..." />
-    <div id="qr-text">QR코드를 생성 중입니다.</div>
+    <div class="star-loading"></div>
+    <div id="qr-text">
+      <div style="font-size: 1.1rem; font-weight: 600; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.6); margin-bottom: 5px;">
+        ✨ 마법의 QR코드 생성 중 ✨
+      </div>
+      <div style="font-size: 0.8rem; color: #e8f4fd; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+        잠시만 기다려주세요...
+      </div>
+    </div>
   `;
 }
 
 function removeQRLoading() {
-  const loadingImg = document.getElementById("qr-loading");
+  const loadingElement = document.querySelector(".star-loading");
   const text = document.getElementById("qr-text");
-  if (loadingImg) loadingImg.remove();
+  if (loadingElement) loadingElement.remove();
   if (text) text.remove();
 }
 

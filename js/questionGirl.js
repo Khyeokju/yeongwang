@@ -100,6 +100,33 @@ const scores = [
 
 let totalScore = 0;  // 전역에서 누적
 
+// 분석 중 화면 표시 함수
+function showAnalysisScreen() {
+  // 기존 질문 컨테이너 숨기기
+  const questionContainer = document.querySelector('.question-container');
+  if (questionContainer) {
+    questionContainer.style.display = 'none';
+  }
+  
+  // 분석 중 화면 생성
+  const analysisScreen = document.createElement('div');
+  analysisScreen.id = 'analysis-screen';
+  analysisScreen.innerHTML = `
+    <div class="analysis-content">
+      <div class="analysis-icon">🏕️</div>
+      <div class="analysis-text">분석 중이니 조금만 기다려주세요...</div>
+      <div class="analysis-subtitle">당신의 성향을 분석하고 있어요</div>
+      <div class="loading-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(analysisScreen);
+}
+
 function handleAnswer(selectedIndex) {
   const q = questions[currentQuestion];
   const scoreForThisAnswer = scores[currentQuestion][selectedIndex]; // 해당 선택지 점수
@@ -117,9 +144,15 @@ function handleAnswer(selectedIndex) {
     if (currentQuestion < questions.length) {
       renderQuestion();
     } else {
-      localStorage.setItem("responses", JSON.stringify(responses));
-      localStorage.setItem("tetoScore", totalScore); // 점수 저장
-      window.location.href = "result.html";
+      // 분석 중 화면 표시
+      showAnalysisScreen();
+      
+      // 결과를 localStorage에 저장하고 결과 페이지로 이동
+      setTimeout(() => {
+        localStorage.setItem("responses", JSON.stringify(responses));
+        localStorage.setItem("tetoScore", totalScore); // 점수 저장
+        window.location.href = "result.html";
+      }, 2000); // 2초 후 결과 페이지로 이동
     }
   }, 200);
 }
