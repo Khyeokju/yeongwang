@@ -92,6 +92,32 @@ body {
   overflow: hidden;
 }
 
+/* 별자리 결과 스타일 */
+.constellation-name {
+  font-size: 48px;
+  font-weight: bold;
+  margin: 20px 0;
+  color: #ffd700;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.personality-description {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 20px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.personality-description p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
 #download-btn {
   position: absolute;
   bottom: 3%;
@@ -143,27 +169,33 @@ body {
 
 /* 기존 .btn 그대로 두고 */
 .btn {
-  border: none;
-  text-align: center;
-  cursor: pointer;
-  outline: none;
-  color: #fff;
-  font-weight: 700;
-  font-size: 36px;
-  background-color: #222;
-  padding: 15px 40px;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  font-family: 'Amatic SC', 'Nanum Pen Script', cursive;
-  pointer-events: auto;
-  position: relative;
-  overflow: hidden;
+  border: none !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  outline: none !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  font-size: 36px !important;
+  background-color: #222 !important;
+  padding: 15px 40px !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
+  font-family: 'Amatic SC', 'Nanum Pen Script', cursive !important;
+  pointer-events: auto !important;
+  position: relative !important;
+  overflow: hidden !important;
+  min-width: 200px !important;
+  min-height: 80px !important;
+  box-sizing: border-box !important;
 }
 
 .btn span {
   position: relative;
   z-index: 1;
-  font-size: 50px;
+  font-size: 50px !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .btn::after {

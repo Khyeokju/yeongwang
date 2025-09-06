@@ -2,25 +2,24 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>심리 테스트</title>
+  <title>여자 질문</title>
   <link rel="stylesheet" href="../css/questionGirl.css">
 </head>
 <body>
-  <div class="situation-header">
-  만약 당신이 캠핑을 간다면?
-</div>
-
-  <div class="button_container">
-    <p class="progress" id="progressText"></p>
-    <div id="questionTextWrapper">
-    <p class="description" id="questionText">질문을 불러오는 중...</p>
+  <div class="question-container">
+    <div class="question-text">
+      <span id="progressText">[1/10]</span>
+      <p id="questionText">질문이 여기에 표시됩니다.</p>
     </div>
-    <div class="gender-buttons" id="answerButtons"></div>
-  </div>
     
-     <button class="back-button" onclick="history.back()">뒤로가기</button>
-     
+    <div class="answer-buttons">
+      <img src="../images/no.png" alt="아니다" class="answer-btn" onclick="handleAnswer(1)">
+      <img src="../images/yes.png" alt="그렇다" class="answer-btn" onclick="handleAnswer(0)">
+    </div>
   </div>
+
+  <img src="../images/back.png" alt="뒤로가기 버튼" class="back-btn" onclick="history.back()">
+
   <script src="../js/questionGirl.js"></script>
 </body>
 </html>

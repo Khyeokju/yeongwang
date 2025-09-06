@@ -1,0 +1,67 @@
+/* Amatic SC (영문 필기체) + 나눔펜스크립트 (한글 손글씨) */
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC&family=Nanum+Pen+Script&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: linear-gradient(to bottom, #cce0ff, #b0ccf3);
+  overflow: hidden;
+  font-family: 'Amatic SC', 'Nanum Pen Script', cursive;
+  background-image: url("../images/starmain.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttons {
+  margin: 10% !important;
+  text-align: center !important;
+  display: flex !important;
+  justify-content: center !important;
+  margin-top: 400px !important;
+}
+
+
+
+.star-btn {
+  cursor: pointer !important;
+  transition: transform 0.3s ease !important;
+  width: 350px !important;
+  height: auto !important;
+  max-width: none !important;
+  min-width: 350px !important;
+}
+
+.star-btn:hover {
+  transform: scale(1.1);
+}
+
+.star-btn:active {
+  transform: scale(0.95);
+}
+
+.back-btn {
+  cursor: pointer !important;
+  transition: transform 0.3s ease !important;
+  width: 250px !important;
+  height: auto !important;
+  position: fixed !important;
+  bottom: 30px !important;
+  right: 30px !important;
+  z-index: 10 !important;
+  max-width: none !important;
+  min-width: 250px !important;
+}
+
+.back-btn:hover {
+  transform: scale(1.1);
+}
+
+.back-btn:active {
+  transform: scale(0.95);
+}

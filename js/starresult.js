@@ -68,7 +68,7 @@ function captureFullFrameAndUpload() {
           return;
         }
 
-        const fileName = `results/${Date.now()}.png`;
+        const fileName = `starresults/${Date.now()}.png`;
         const storageRef = storage.ref().child(fileName);
 
         console.log("Firebase Storage 업로드 시작");
@@ -111,7 +111,6 @@ function showQRLoading() {
     <div id="qr-text">QR코드를 생성 중입니다.</div>
   `;
 }
-// <a href="https://pixabay.com/ko//?utm_source=link-attribution&utm_medium=referral&utm_campaign=animation&utm_content=7166">Pixabay</a>에서 <a href="https://pixabay.com/ko/users/u_u9abgwxlgv-38338414/?utm_source=link-attribution&utm_medium=referral&utm_campaign=animation&utm_content=7166">u_u9abgwxlgv</a>님이 제공한 GIF
 
 function removeQRLoading() {
   const loadingImg = document.getElementById("qr-loading");
@@ -120,4 +119,18 @@ function removeQRLoading() {
   if (text) text.remove();
 }
 
-window.onload = initCameraAndCapture;
+// 페이지 로드 시 별자리 결과 표시 및 카메라 초기화
+window.onload = function() {
+    displayStarResult();
+    initCameraAndCapture();
+};
+
+// 별자리 결과 표시 (요약글만)
+function displayStarResult() {
+    const personality = localStorage.getItem('starPersonality') || '성격 특징을 불러올 수 없습니다.';
+    
+    const descriptionBox = document.getElementById('description-box');
+    descriptionBox.innerHTML = `
+        <p>${personality}</p>
+    `;
+}

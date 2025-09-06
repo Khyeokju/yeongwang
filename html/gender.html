@@ -7,18 +7,14 @@
 </head>
 <body>
   <div class="icon-container">
-    <img src="../images/masi.png" alt="마시멜로 아이콘" class="icon-img">
-    <!-- <a href="https://www.flaticon.com/kr/free-icons/" title="마시멜로 아이콘">마시멜로 아이콘 제작자: Freepik - Flaticon</a> -->
-    <div class="overlay">
-      <div class="overlay-text">성별을 선택해주세요</div>
-      <div class="gender-buttons">
-        <button id="maleBtn" onclick="selectMen('male')"><span>남자</span></button>
-        <button id="femaleBtn" onclick="selectGirl('female')"><span>여자</span></button>
-      </div>
-    </div>
-    <button class="back-button" onclick="history.back()">뒤로가기</button>
-
   </div>
+
+  <div class="buttons">
+    <img src="../images/male.png" alt="남자 버튼" class="gender-btn" onclick="selectMen('male')">
+    <img src="../images/female.png" alt="여자 버튼" class="gender-btn" onclick="selectGirl('female')">
+  </div>
+
+  <img src="../images/back.png" alt="뒤로가기 버튼" class="back-btn" onclick="history.back()">
 
   <script src="../js/gender.js"></script>
 </body>

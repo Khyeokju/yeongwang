@@ -1,4 +1,3 @@
-
 /* Amatic SC (영문 필기체) + 나눔펜스크립트 (한글 손글씨) */
 @import url('https://fonts.googleapis.com/css2?family=Amatic+SC&family=Nanum+Pen+Script&display=swap');
 
@@ -9,7 +8,7 @@ body {
   background: linear-gradient(to bottom, #cce0ff, #b0ccf3);
   overflow: hidden;
   font-family: 'Amatic SC', 'Nanum Pen Script', cursive;
-  background-image: url("../images/girl1.png");
+  background-image: url("../images/man1.png");
   background-size: cover;            /* 비율 유지하며 꽉 채움 */
   background-position: center;       /* 중앙 정렬 */
   background-repeat: no-repeat;      /* 반복 없음 */
@@ -17,6 +16,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transition: background-image 0.8s ease-in-out;
 }
 
 .question-container {
@@ -50,8 +50,8 @@ body {
 .answer-buttons {
   display: flex;
   justify-content: center;
-  gap: 100px;
-  margin-top: 50px;
+  gap: 65px;
+  margin-top: 250px;
 }
 
 .answer-btn {
@@ -73,7 +73,7 @@ body {
 .back-btn {
   cursor: pointer;
   transition: transform 0.3s ease;
-  width: 150px;
+  width: 250px;
   height: auto;
   position: fixed;
   bottom: 30px;
