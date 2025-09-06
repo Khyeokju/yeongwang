@@ -83,6 +83,7 @@ function handleAnswer(answer) {
         
         // 결과를 localStorage에 저장하고 결과 페이지로 이동
         localStorage.setItem('starResult', result);
+        localStorage.setItem('starConstellation', result); // 별자리 이름도 별도로 저장
         localStorage.setItem('starPersonality', personality);
         location.href = './starresult.html';
     }

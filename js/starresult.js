@@ -119,18 +119,45 @@ function removeQRLoading() {
   if (text) text.remove();
 }
 
-// 페이지 로드 시 별자리 결과 표시 및 카메라 초기화
+// 페이지 로드 시 별자리 결과 표시
 window.onload = function() {
     displayStarResult();
-    initCameraAndCapture();
 };
 
-// 별자리 결과 표시 (요약글만)
+// 별자리와 이미지 프레임 매핑
+const constellationFrames = {
+    '물병자리': '010.png',
+    '물고기자리': '011.png',
+    '양자리': '012.png',
+    '황소자리': '013.png',
+    '쌍둥이자리': '014.png',
+    '게자리': '015.png',
+    '사자자리': '016.png',
+    '처녀자리': '017.png',
+    '천칭자리': '018.png',
+    '전갈자리': '019.png',
+    '궁수자리': '020.png',
+    '염소자리': '021.png'
+};
+
+// 별자리 결과 표시 및 프레임 설정
 function displayStarResult() {
     const personality = localStorage.getItem('starPersonality') || '성격 특징을 불러올 수 없습니다.';
+    const constellation = localStorage.getItem('starConstellation') || '물병자리';
+    
+    // 결과 배경 이미지를 별자리에 맞는 프레임으로 변경
+    const resultBg = document.getElementById('result-bg');
+    const frameImage = constellationFrames[constellation] || '010.png';
+    
+    // 이미지 로딩 완료 후 카메라 초기화
+    resultBg.onload = function() {
+        console.log(`${constellation} 프레임 이미지 로딩 완료`);
+        initCameraAndCapture();
+    };
+    
+    resultBg.src = `../images/${frameImage}`;
+    resultBg.alt = `${constellation} 프레임`;
     
     const descriptionBox = document.getElementById('description-box');
-    descriptionBox.innerHTML = `
-        <p>${personality}</p>
-    `;
+    descriptionBox.innerHTML = ``;
 }

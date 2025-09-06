@@ -24,6 +24,9 @@ body {
   color: #fff;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
   z-index: 5;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .question-text {
@@ -56,17 +59,20 @@ body {
 
 .answer-btn {
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
   width: 300px;
   height: auto;
+  filter: brightness(1);
 }
 
 .answer-btn:hover {
   transform: scale(1.1);
+  filter: brightness(1.2);
 }
 
 .answer-btn:active {
   transform: scale(0.95);
+  filter: brightness(0.8);
 }
 
 /* 뒤로가기 버튼 이미지 스타일 */

@@ -54,20 +54,35 @@ const questions = [
 let currentQuestion = 0;
 let responses = [];
 
+
 function renderQuestion() {
   const q = questions[currentQuestion];
-  document.getElementById("progressText").textContent = q.page;
-  document.getElementById("questionText").textContent = q.question;
-  const container = document.getElementById("answerButtons");
-  container.innerHTML = "";
-  q.answers.forEach((answer, index) => {
-    const btn = document.createElement("button");
+  
+  // 페이드 아웃 효과
+  const questionContainer = document.querySelector('.button_container');
+  questionContainer.style.opacity = '0';
+  questionContainer.style.transform = 'translateY(30px)';
+  
+  setTimeout(() => {
+    // 내용 업데이트
+    document.getElementById("progressText").textContent = q.page;
+    document.getElementById("questionText").textContent = q.question;
+    
+    const container = document.getElementById("answerButtons");
+    container.innerHTML = "";
+    q.answers.forEach((answer, index) => {
+      const btn = document.createElement("button");
       btn.className = `btn ${answer === "그렇다" ? "yes-btn" : "no-btn"}`; 
-    btn.textContent = answer;
-    btn.innerHTML = `<span>${answer}</span>`;
-    btn.onclick = () => handleAnswer(index);
-    container.appendChild(btn);
-  });
+      btn.textContent = answer;
+      btn.innerHTML = `<span>${answer}</span>`;
+      btn.onclick = () => handleAnswer(index);
+      container.appendChild(btn);
+    });
+    
+    // 페이드 인 효과
+    questionContainer.style.opacity = '1';
+    questionContainer.style.transform = 'translateY(0)';
+  }, 400);
 }
 
 const scores = [
@@ -94,13 +109,20 @@ function handleAnswer(selectedIndex) {
   responses.push({ question: q.question, answer: q.answers[selectedIndex] });
   currentQuestion++;
 
-  if (currentQuestion < questions.length) {
-    renderQuestion();
-  } else {
-    localStorage.setItem("responses", JSON.stringify(responses));
-    localStorage.setItem("tetoScore", totalScore); // 점수 저장
-    window.location.href = "result.html";
-  }
+  // 버튼 클릭 피드백 효과
+  const clickedBtn = event.target;
+  clickedBtn.style.transform = 'scale(0.95)';
+  clickedBtn.style.opacity = '0.7';
+  
+  setTimeout(() => {
+    if (currentQuestion < questions.length) {
+      renderQuestion();
+    } else {
+      localStorage.setItem("responses", JSON.stringify(responses));
+      localStorage.setItem("tetoScore", totalScore); // 점수 저장
+      window.location.href = "result.html";
+    }
+  }, 200);
 }
 
 

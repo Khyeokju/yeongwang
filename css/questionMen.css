@@ -39,6 +39,9 @@ body {
   left: 0;
   right: 0;
   top: 20%;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .description, .link {
@@ -68,6 +71,7 @@ body {
   border-radius: 12px;     
   box-shadow: 0 5px 15px rgba(0,0,0,0.20);
   font-family: 'Amatic SC', 'Nanum Pen Script', cursive;
+  transition: all 0.3s ease;
 }
 
 
@@ -90,9 +94,19 @@ body {
   transform: translateX(-98%) translateY(-25%) rotate(45deg);
 }
 
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.30);
+}
+
 .btn:hover:after {
   -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
   transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.20);
 }
 
 .link {
