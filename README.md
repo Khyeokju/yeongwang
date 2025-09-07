@@ -1,1 +1,60 @@
- 
+ # ✅ 심리테스트+인생한컷
+
+> 재미있는 심리테스트와 함께 나만의 특별한 사진을 만들어보기
+> 개발 인원: 혼자 진행
+> 개발 기간: 25/08~09
+
+## ✅ 프로젝트 소개
+
+**심리테스트+인생한컷**은 두 가지(에겐/테토, 별자리) 테스트를 통해 사용자의 성향을 분석하고, 그 결과를 바탕으로 개인화된 프레임과 함께 사진을 촬영할 수 있는 웹 애플리케이션입니다.
+
+## 프로젝트 배경
+제주대학교에서 진행하는 2025 연광제 축제 체험부스에서 전산통계학과의 특색을 살리고 흥미를 유발 시키기 위해 최근 유행하는 주제의 심리테스트와 인생네컷 시스템을 직접 개발하기로 하여 시작하였습니다.
+
+### ✅ 주요 기능
+
+- **에겐테토 테스트**: 성향을 분석하여 에겐/테토 성격 유형 판별
+- **별자리 테스트**: 12가지 별자리 중 나와 맞는 별자리 찾기
+- **인생한컷 촬영**: 테스트 결과에 맞는 개인화된 프레임으로 사진 촬영
+- **QR코드 다운로드**: 촬영한 사진을 QR코드로 쉽게 다운로드
+- **테마별 디자인**: 각 테스트마다 고유한 시각적 테마 제공
+
+## 🚀 기술 스택
+
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **Backend**: Firebase (Storage, Hosting)
+- **이미지 처리**: HTML5 Canvas, html2canvas
+- **QR코드**: QRious.js
+- **배포**: Firebase Hosting
+
+## 📚 프로젝트 구조
+
+<img width="827" height="740" alt="image" src="https://github.com/user-attachments/assets/6e2ae090-3179-49af-86c7-49db7673a1e4" />
+<img width="1348" height="639" alt="image" src="https://github.com/user-attachments/assets/cc3bc60e-12dd-4851-a0b0-aae7ef6641d4" />
+
+## 프로젝트 실행 화면
+
+### 에겐/테토 테스트
+<img width="1920" height="913" alt="image" src="https://github.com/user-attachments/assets/6ea70a0a-f7a1-40cc-9902-a591ebaa450a" />
+<img width="1920" height="911" alt="image" src="https://github.com/user-attachments/assets/112bc9ff-c213-427e-8d45-7765a64b4c2c" />
+<img width="1920" height="911" alt="image" src="https://github.com/user-attachments/assets/48398961-0716-488f-b8a7-ba807b4216c5" />
+
+### 별자리 테스트
+<img width="1920" height="908" alt="image" src="https://github.com/user-attachments/assets/af5e41e4-50ca-4369-a9ed-f060204de6cf" />
+<img width="1920" height="914" alt="image" src="https://github.com/user-attachments/assets/7fa25e8b-d8fe-401d-9247-945ce2baef48" />
+<img width="1920" height="906" alt="image" src="https://github.com/user-attachments/assets/f9b8d574-2626-4221-a08b-d0c1fc51a44c" />
+
+## 회고
+처음엔 탐지 모델을 적용해서 프레임 안에 잡힌 사람의 자세를 분석하고, 화면에 띄워진 질문에 전자/후자를 판별하는 방식으로 사진 촬영과 동시에 심리테스트를 진행하려 했으나 
+모델을 적용하게 되면 제시간 안에 개발이 가능할지 미지수여서 지금의 방식으로 변경하게 되었다.
+
+처음 프로젝트를 시작할 때 프레임 안에 촬영된 사진을 프레임과 함께 서버로 전송하고 QR코드를 통해 다운로드를 받을 수 있게 하는 시스템을 구현하는 것에서 어려움을 겪었다.
+사진은 firebase storage를 이용하여서 로컬에서 서버로 보내는 플로우 까지는 원활하게 구현했지만, 프론트 부분에서 촬영된 사진과 함께 이미지로 되어있는 프레임을 같이 묶어서
+서버로 전달하는 방식을 구현하는 것이 잘 되지 않았다. CORS 보안문제를 해결하고 화면 캡처와 촬영 사이의 갭도 두는 등의 시도를 통해서 문제를 해결하였다.
+
+프론트 부분은 처음에 css요소와 아이콘으로만 구성해보았는데 아쉬움이 많이 느껴져서 사이트에서 직접 템플릿을 제작하고 그 이미지에 질문, 진행상황과 테마를 녹여내서 화면으로 설정하고
+하고 버튼 또한 이미지를 따로 만들어서 생성하였다. 확실히 코드를 통해서 디자인을 하는 것보다는 훨씬 퀄리티가 좋다고 느껴졌다.
+
+디자이너의 중요성을 심히 깨달을 수 있었고, 늘 이용해보기만 했던 인생네컷 시스템을 직접 구현해보는 시도를 통하여 촬영된 사진이 어떻게 다운로드 될 수 있었는지 알게 되는 경험을 할 수 있었다.
+
+
