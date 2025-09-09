@@ -247,3 +247,202 @@ body {
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
 }
+
+/* 아이패드/태블릿 반응형 디자인 */
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+    /* 아이패드 세로 모드 */
+    .icon-container {
+        width: 80vw;
+        max-width: 500px;
+    }
+    
+    .overlay-text {
+        font-size: 60px;
+    }
+    
+    .start-btn {
+        width: 280px !important;
+        margin-top: 300px !important;
+    }
+    
+    .left-button {
+        left: 30px;
+    }
+    
+    .right-button {
+        right: 30px;
+    }
+    
+    .side-btn {
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 24px !important;
+    }
+    
+    .side-text {
+        font-size: 14px !important;
+        max-width: 100px !important;
+    }
+}
+
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+    /* 아이패드 가로 모드 */
+    .icon-container {
+        width: 60vw;
+        max-width: 400px;
+    }
+    
+    .overlay-text {
+        font-size: 50px;
+    }
+    
+    .start-btn {
+        width: 250px !important;
+        margin-top: 200px !important;
+    }
+    
+    .left-button {
+        left: 20px;
+    }
+    
+    .right-button {
+        right: 20px;
+    }
+    
+    .side-btn {
+        width: 55px !important;
+        height: 55px !important;
+        font-size: 22px !important;
+    }
+    
+    .side-text {
+        font-size: 12px !important;
+        max-width: 90px !important;
+    }
+}
+
+/* 노트북 반응형 디자인 */
+@media screen and (max-width: 1366px) and (min-width: 1025px) {
+    .icon-container {
+        width: 70vw;
+        max-width: 550px;
+    }
+    
+    .overlay-text {
+        font-size: 70px;
+    }
+    
+    .start-btn {
+        width: 320px !important;
+        margin-top: 350px !important;
+    }
+    
+    .left-button {
+        left: 40px;
+    }
+    
+    .right-button {
+        right: 40px;
+    }
+    
+    .side-btn {
+        width: 65px !important;
+        height: 65px !important;
+        font-size: 26px !important;
+    }
+    
+    .side-text {
+        font-size: 15px !important;
+        max-width: 120px !important;
+    }
+}
+
+/* 모바일 반응형 디자인 */
+@media screen and (max-width: 768px) {
+    .icon-container {
+        width: 90vw;
+        max-width: 400px;
+    }
+    
+    .overlay-text {
+        font-size: 45px;
+    }
+    
+    .start-btn {
+        width: 250px !important;
+        margin-top: 250px !important;
+    }
+    
+    .left-button {
+        left: 15px;
+    }
+    
+    .right-button {
+        right: 15px;
+    }
+    
+    .side-btn {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 20px !important;
+    }
+    
+    .side-text {
+        font-size: 12px !important;
+        max-width: 80px !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .icon-container {
+        width: 95vw;
+        max-width: 350px;
+    }
+    
+    .overlay-text {
+        font-size: 35px;
+    }
+    
+    .start-btn {
+        width: 200px !important;
+        margin-top: 200px !important;
+    }
+    
+    .left-button {
+        left: 10px;
+    }
+    
+    .right-button {
+        right: 10px;
+    }
+    
+    .side-btn {
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 18px !important;
+    }
+    
+    .side-text {
+        font-size: 10px !important;
+        max-width: 70px !important;
+    }
+}
+
+/* 터치 디바이스 최적화 */
+@media (hover: none) and (pointer: coarse) {
+    .side-btn {
+        min-width: 44px !important;
+        min-height: 44px !important;
+    }
+    
+    .start-btn {
+        min-width: 200px !important;
+        min-height: 60px !important;
+    }
+    
+    .btn {
+        min-width: 150px !important;
+        min-height: 50px !important;
+        padding: 20px 30px !important;
+    }
+}

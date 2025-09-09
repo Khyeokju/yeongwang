@@ -1,5 +1,6 @@
-firebase.initializeApp(window.__FIREBASE_CONFIG__);
-const storage = firebase.storage();
+// 테스트 중이므로 Firebase 업로드 비활성화
+// firebase.initializeApp(window.__FIREBASE_CONFIG__);
+// const storage = firebase.storage();
 
 function initCameraAndCapture() {
   const video = document.getElementById("webcam");
@@ -19,6 +20,9 @@ function initCameraAndCapture() {
 
   navigator.mediaDevices.getUserMedia(constraints).then(stream => {
     video.srcObject = stream;
+    // 미러 미预览
+    video.style.transform = "scaleX(-1)";
+    video.style.transformOrigin = "center";
     
     // 카메라 해상도 정보 표시 (디버깅용)
     video.onloadedmetadata = () => {
@@ -44,6 +48,11 @@ function initCameraAndCapture() {
         const ctx = canvas.getContext("2d");
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = "high";
+        
+        // 좌우반전을 위해 캔버스에 반전 변환 적용
+        ctx.save();
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
         ctx.drawImage(
           video,
           0, cropTop,
@@ -51,6 +60,7 @@ function initCameraAndCapture() {
           0, 0,
           canvas.width, canvas.height
         );
+        ctx.restore();
 
         // 무손실에 가까운 PNG로 유지하여 중간 단계 압축 손실 방지
         const dataUrl = canvas.toDataURL("image/png");
@@ -68,7 +78,9 @@ function initCameraAndCapture() {
 
         console.log("전체 프레임 업로드 시작");
         showQRLoading(); // 로딩 표시 함수 호출
-        captureFullFrameAndUpload();
+        // 테스트 중이므로 Firebase 업로드 비활성화
+        // captureFullFrameAndUpload();
+        showTestQR(); // 테스트용 QR코드 표시
       }
     }, 2000);
   }).catch(err => {
@@ -176,6 +188,43 @@ function removeQRLoading() {
   const text = document.getElementById("qr-text");
   if (loadingElement) loadingElement.remove();
   if (text) text.remove();
+}
+
+// 테스트용 QR코드 표시 함수
+function showTestQR() {
+  setTimeout(() => {
+    const qrContainer = document.getElementById("qrcode");
+    removeQRLoading();
+    qrContainer.innerHTML = "";
+    
+    // 테스트용 QR코드 생성 (실제 URL 대신 테스트 메시지)
+    const qr = new QRious({
+      element: document.createElement("canvas"),
+      value: "https://yeongwang-photo.web.app - 별자리 테스트 QR코드",
+      size: 150 // 더 작은 크기로 조절
+    });
+    
+    qrContainer.appendChild(qr.element);
+    
+    const text = document.createElement("div");
+    text.id = "qr-text";
+    text.style.position = "absolute";
+    text.style.top = "100%";
+    text.style.left = "50%";
+    text.style.transform = "translateX(-50%)";
+    text.style.marginTop = "10px";
+    text.style.whiteSpace = "nowrap";
+    text.style.textAlign = "center";
+    text.innerHTML = `
+      <div style="font-size: 0.8rem; font-weight: 700; margin-bottom: 4px; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
+        ✨ 테스트 QR코드 ✨
+      </div>
+      <div style="font-size: 0.6rem; color: #e8f4fd; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+        QR코드를 스캔하여 별자리 사진을 다운로드
+      </div>
+    `;
+    qrContainer.appendChild(text);
+  }, 2000); // 2초 후 테스트 QR코드 표시
 }
 
 // 페이지 로드 시 별자리 결과 표시

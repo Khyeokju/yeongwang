@@ -65,3 +65,109 @@ body {
 .back-btn:active {
   transform: scale(0.95);
 }
+
+/* 아이패드/태블릿 반응형 디자인 */
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+    /* 아이패드 세로 모드 */
+    .buttons {
+        margin-top: 300px !important;
+    }
+    
+    .star-btn {
+        width: 280px !important;
+        min-width: 280px !important;
+    }
+    
+    .back-btn {
+        width: 200px !important;
+        min-width: 200px !important;
+        bottom: 20px !important;
+        right: 20px !important;
+    }
+}
+
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+    /* 아이패드 가로 모드 */
+    .buttons {
+        margin-top: 200px !important;
+    }
+    
+    .star-btn {
+        width: 250px !important;
+        min-width: 250px !important;
+    }
+    
+    .back-btn {
+        width: 180px !important;
+        min-width: 180px !important;
+        bottom: 15px !important;
+        right: 15px !important;
+    }
+}
+
+/* 노트북 반응형 디자인 */
+@media screen and (max-width: 1366px) and (min-width: 1025px) {
+    .buttons {
+        margin-top: 350px !important;
+    }
+    
+    .star-btn {
+        width: 320px !important;
+        min-width: 320px !important;
+    }
+    
+    .back-btn {
+        width: 220px !important;
+        min-width: 220px !important;
+    }
+}
+
+/* 모바일 반응형 디자인 */
+@media screen and (max-width: 768px) {
+    .buttons {
+        margin-top: 250px !important;
+    }
+    
+    .star-btn {
+        width: 250px !important;
+        min-width: 250px !important;
+    }
+    
+    .back-btn {
+        width: 150px !important;
+        min-width: 150px !important;
+        bottom: 15px !important;
+        right: 15px !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .buttons {
+        margin-top: 200px !important;
+    }
+    
+    .star-btn {
+        width: 200px !important;
+        min-width: 200px !important;
+    }
+    
+    .back-btn {
+        width: 120px !important;
+        min-width: 120px !important;
+        bottom: 10px !important;
+        right: 10px !important;
+    }
+}
+
+/* 터치 디바이스 최적화 */
+@media (hover: none) and (pointer: coarse) {
+    .star-btn {
+        min-width: 200px !important;
+        min-height: 60px !important;
+    }
+    
+    .back-btn {
+        min-width: 120px !important;
+        min-height: 40px !important;
+    }
+}

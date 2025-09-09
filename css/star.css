@@ -16,7 +16,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: opacity 0.3s ease-in-out, background-image 0.5s ease-in-out;
+    transition: opacity 0.15s ease-in-out, background-image 0.2s ease-in-out;
 }
 
 .question-container {
@@ -38,7 +38,7 @@ body {
 
 .answer-btn {
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.15s ease;
     width: 200px;
     height: auto;
 }
@@ -56,7 +56,7 @@ body {
     bottom: 30px;
     right: 120px;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.15s ease;
     width: 130px;
     height: auto;
 }
@@ -175,5 +175,79 @@ body {
     }
     40% {
         transform: scale(1);
+    }
+}
+
+/* 아이패드/태블릿 반응형 디자인 */
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+    /* 아이패드 세로 모드 */
+    .answer-buttons {
+        gap: 100px;
+        margin-top: 300px;
+    }
+    
+    .answer-btn {
+        width: 150px;
+    }
+    
+    .back-btn {
+        width: 100px;
+        bottom: 20px;
+        right: 80px;
+    }
+    
+    .analysis-text {
+        font-size: 2rem;
+    }
+    
+    .analysis-subtitle {
+        font-size: 1rem;
+    }
+    
+    .analysis-icon {
+        font-size: 60px;
+    }
+}
+
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+    /* 아이패드 가로 모드 */
+    .answer-buttons {
+        gap: 80px;
+        margin-top: 200px;
+    }
+    
+    .answer-btn {
+        width: 120px;
+    }
+    
+    .back-btn {
+        width: 90px;
+        bottom: 15px;
+        right: 60px;
+    }
+    
+    .analysis-text {
+        font-size: 1.8rem;
+    }
+    
+    .analysis-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .analysis-icon {
+        font-size: 50px;
+    }
+}
+
+/* 터치 디바이스 최적화 */
+@media (hover: none) and (pointer: coarse) {
+    .answer-btn {
+        min-width: 120px !important;
+        min-height: 60px !important;
+    }
+    
+    .back-btn {
+        min-width: 80px !important;
+        min-height: 40px !important;
     }
 }

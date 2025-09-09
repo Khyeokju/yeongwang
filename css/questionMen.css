@@ -39,7 +39,7 @@ body {
   left: 0;
   right: 0;
   top: 20%;
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
   opacity: 1;
   transform: translateY(0);
 }
@@ -71,7 +71,7 @@ body {
   border-radius: 12px;     
   box-shadow: 0 5px 15px rgba(0,0,0,0.20);
   font-family: 'Amatic SC', 'Nanum Pen Script', cursive;
-  transition: all 0.3s ease;
+  transition: all 0.15s ease;
 }
 
 
@@ -318,5 +318,263 @@ body {
     }
     40% {
         transform: scale(1);
+    }
+}
+
+/* 아이패드/태블릿 반응형 디자인 */
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+    /* 아이패드 세로 모드 */
+    #progressText {
+        font-size: 50px;
+    }
+    
+    #questionText {
+        font-size: 65px;
+        padding: 15px 30px;
+    }
+    
+    .situation-header {
+        font-size: 60px;
+        top: 120px;
+    }
+    
+    #answerButtons {
+        gap: 100px;
+        margin-top: 25px;
+    }
+    
+    .answer-btn {
+        padding: 15px 35px;
+        font-size: 30px;
+    }
+    
+    .back-button {
+        font-size: 32px;
+        padding: 10px 20px;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .analysis-text {
+        font-size: 2rem;
+    }
+    
+    .analysis-subtitle {
+        font-size: 1rem;
+    }
+    
+    .analysis-icon {
+        font-size: 60px;
+    }
+}
+
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+    /* 아이패드 가로 모드 */
+    #progressText {
+        font-size: 45px;
+    }
+    
+    #questionText {
+        font-size: 55px;
+        padding: 12px 25px;
+    }
+    
+    .situation-header {
+        font-size: 50px;
+        top: 100px;
+    }
+    
+    #answerButtons {
+        gap: 80px;
+        margin-top: 20px;
+    }
+    
+    .answer-btn {
+        padding: 12px 30px;
+        font-size: 26px;
+    }
+    
+    .back-button {
+        font-size: 28px;
+        padding: 8px 16px;
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .analysis-text {
+        font-size: 1.8rem;
+    }
+    
+    .analysis-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .analysis-icon {
+        font-size: 50px;
+    }
+}
+
+/* 노트북 반응형 디자인 */
+@media screen and (max-width: 1366px) and (min-width: 1025px) {
+    #progressText {
+        font-size: 55px;
+    }
+    
+    #questionText {
+        font-size: 75px;
+        padding: 18px 35px;
+    }
+    
+    .situation-header {
+        font-size: 70px;
+        top: 130px;
+    }
+    
+    #answerButtons {
+        gap: 150px;
+        margin-top: 28px;
+    }
+    
+    .answer-btn {
+        padding: 18px 45px;
+        font-size: 32px;
+    }
+    
+    .back-button {
+        font-size: 36px;
+        padding: 11px 22px;
+    }
+    
+    .analysis-text {
+        font-size: 2.2rem;
+    }
+    
+    .analysis-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .analysis-icon {
+        font-size: 70px;
+    }
+}
+
+/* 모바일 반응형 디자인 */
+@media screen and (max-width: 768px) {
+    #progressText {
+        font-size: 40px;
+    }
+    
+    #questionText {
+        font-size: 50px;
+        padding: 12px 20px;
+        max-width: 90vw;
+    }
+    
+    .situation-header {
+        font-size: 45px;
+        top: 100px;
+    }
+    
+    #answerButtons {
+        gap: 50px;
+        margin-top: 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .answer-btn {
+        padding: 15px 30px;
+        font-size: 28px;
+        margin: 10px 0;
+    }
+    
+    .back-button {
+        font-size: 28px;
+        padding: 8px 16px;
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .analysis-text {
+        font-size: 1.8rem;
+    }
+    
+    .analysis-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .analysis-icon {
+        font-size: 50px;
+    }
+    
+    .button_container {
+        top: 15%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #progressText {
+        font-size: 32px;
+    }
+    
+    #questionText {
+        font-size: 40px;
+        padding: 10px 15px;
+        max-width: 95vw;
+    }
+    
+    .situation-header {
+        font-size: 35px;
+        top: 80px;
+    }
+    
+    #answerButtons {
+        gap: 30px;
+        margin-top: 15px;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .answer-btn {
+        padding: 12px 25px;
+        font-size: 24px;
+        margin: 8px 0;
+    }
+    
+    .back-button {
+        font-size: 24px;
+        padding: 6px 12px;
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    .analysis-text {
+        font-size: 1.5rem;
+    }
+    
+    .analysis-subtitle {
+        font-size: 0.8rem;
+    }
+    
+    .analysis-icon {
+        font-size: 40px;
+    }
+    
+    .button_container {
+        top: 12%;
+    }
+}
+
+/* 터치 디바이스 최적화 */
+@media (hover: none) and (pointer: coarse) {
+    .answer-btn {
+        min-width: 150px !important;
+        min-height: 50px !important;
+        padding: 15px 25px !important;
+    }
+    
+    .back-button {
+        min-width: 80px !important;
+        min-height: 40px !important;
     }
 }

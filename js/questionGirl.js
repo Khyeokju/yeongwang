@@ -58,31 +58,32 @@ let responses = [];
 function renderQuestion() {
   const q = questions[currentQuestion];
   
-  // 페이드 아웃 효과
+  // 즉시 내용 업데이트 (애니메이션 없이)
+  document.getElementById("progressText").textContent = q.page;
+  document.getElementById("questionText").textContent = q.question;
+  
+  const container = document.getElementById("answerButtons");
+  container.innerHTML = "";
+  q.answers.forEach((answer, index) => {
+    const btn = document.createElement("button");
+    btn.className = `btn ${answer === "그렇다" ? "yes-btn" : "no-btn"}`; 
+    btn.textContent = answer;
+    btn.innerHTML = `<span>${answer}</span>`;
+    btn.onclick = () => handleAnswer(index);
+    container.appendChild(btn);
+  });
+  
+  // 빠른 페이드 인 효과
   const questionContainer = document.querySelector('.question-container');
   questionContainer.style.opacity = '0';
-  questionContainer.style.transform = 'translateY(30px)';
+  questionContainer.style.transform = 'translateY(10px)';
   
-  setTimeout(() => {
-    // 내용 업데이트
-    document.getElementById("progressText").textContent = q.page;
-    document.getElementById("questionText").textContent = q.question;
-    
-    const container = document.getElementById("answerButtons");
-    container.innerHTML = "";
-    q.answers.forEach((answer, index) => {
-      const btn = document.createElement("button");
-      btn.className = `btn ${answer === "그렇다" ? "yes-btn" : "no-btn"}`; 
-      btn.textContent = answer;
-      btn.innerHTML = `<span>${answer}</span>`;
-      btn.onclick = () => handleAnswer(index);
-      container.appendChild(btn);
-    });
-    
-    // 페이드 인 효과
+  // requestAnimationFrame을 사용한 부드러운 애니메이션
+  requestAnimationFrame(() => {
+    questionContainer.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
     questionContainer.style.opacity = '1';
     questionContainer.style.transform = 'translateY(0)';
-  }, 400);
+  });
 }
 
 const scores = [
@@ -135,26 +136,27 @@ function handleAnswer(selectedIndex) {
   responses.push({ question: q.question, answer: q.answers[selectedIndex] });
   currentQuestion++;
 
-  // 버튼 클릭 피드백 효과
+  // 버튼 클릭 피드백 효과 (즉시)
   const clickedBtn = event.target;
   clickedBtn.style.transform = 'scale(0.95)';
   clickedBtn.style.opacity = '0.7';
   
-  setTimeout(() => {
+  // 최소한의 딜레이로 즉시 처리
+  requestAnimationFrame(() => {
     if (currentQuestion < questions.length) {
       renderQuestion();
     } else {
       // 분석 중 화면 표시
       showAnalysisScreen();
       
-      // 결과를 localStorage에 저장하고 결과 페이지로 이동
+      // 결과를 localStorage에 저장하고 결과 페이지로 이동 (딜레이 단축)
       setTimeout(() => {
         localStorage.setItem("responses", JSON.stringify(responses));
         localStorage.setItem("tetoScore", totalScore); // 점수 저장
         window.location.href = "result.html";
-      }, 2000); // 2초 후 결과 페이지로 이동
+      }, 1000); // 2초 → 1초로 단축
     }
-  }, 200);
+  });
 }
 
 

@@ -190,3 +190,208 @@ body {
 .back-btn:active {
     transform: scale(0.95);
 }
+
+/* 아이패드/태블릿 반응형 디자인 */
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+    /* 아이패드 세로 모드 */
+    .icon-container {
+        width: 80vw;
+        max-width: 500px;
+    }
+    
+    .overlay-text {
+        font-size: 60px;
+    }
+    
+    .buttons {
+        gap: 30px !important;
+        margin-top: 300px !important;
+    }
+    
+    .gender-btn {
+        width: 250px !important;
+        min-width: 250px !important;
+    }
+    
+    .back-btn {
+        width: 200px !important;
+        min-width: 200px !important;
+        bottom: 20px !important;
+        right: 20px !important;
+    }
+    
+    #maleBtn, #femaleBtn {
+        font-size: 36px;
+        padding: 18px 60px;
+    }
+}
+
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+    /* 아이패드 가로 모드 */
+    .icon-container {
+        width: 60vw;
+        max-width: 400px;
+    }
+    
+    .overlay-text {
+        font-size: 50px;
+    }
+    
+    .buttons {
+        gap: 25px !important;
+        margin-top: 200px !important;
+    }
+    
+    .gender-btn {
+        width: 200px !important;
+        min-width: 200px !important;
+    }
+    
+    .back-btn {
+        width: 180px !important;
+        min-width: 180px !important;
+        bottom: 15px !important;
+        right: 15px !important;
+    }
+    
+    #maleBtn, #femaleBtn {
+        font-size: 32px;
+        padding: 15px 50px;
+    }
+}
+
+/* 노트북 반응형 디자인 */
+@media screen and (max-width: 1366px) and (min-width: 1025px) {
+    .icon-container {
+        width: 70vw;
+        max-width: 550px;
+    }
+    
+    .overlay-text {
+        font-size: 70px;
+    }
+    
+    .buttons {
+        gap: 40px !important;
+        margin-top: 350px !important;
+    }
+    
+    .gender-btn {
+        width: 280px !important;
+        min-width: 280px !important;
+    }
+    
+    .back-btn {
+        width: 220px !important;
+        min-width: 220px !important;
+    }
+    
+    #maleBtn, #femaleBtn {
+        font-size: 38px;
+        padding: 20px 70px;
+    }
+}
+
+/* 모바일 반응형 디자인 */
+@media screen and (max-width: 768px) {
+    .icon-container {
+        width: 90vw;
+        max-width: 400px;
+    }
+    
+    .overlay-text {
+        font-size: 45px;
+    }
+    
+    .buttons {
+        gap: 20px !important;
+        margin-top: 250px !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    
+    .gender-btn {
+        width: 200px !important;
+        min-width: 200px !important;
+    }
+    
+    .back-btn {
+        width: 150px !important;
+        min-width: 150px !important;
+        bottom: 15px !important;
+        right: 15px !important;
+    }
+    
+    #maleBtn, #femaleBtn {
+        font-size: 28px;
+        padding: 15px 40px;
+        margin: 10px 0;
+    }
+    
+    .gender-buttons {
+        gap: 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .icon-container {
+        width: 95vw;
+        max-width: 350px;
+    }
+    
+    .overlay-text {
+        font-size: 35px;
+    }
+    
+    .buttons {
+        gap: 15px !important;
+        margin-top: 200px !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    
+    .gender-btn {
+        width: 180px !important;
+        min-width: 180px !important;
+    }
+    
+    .back-btn {
+        width: 120px !important;
+        min-width: 120px !important;
+        bottom: 10px !important;
+        right: 10px !important;
+    }
+    
+    #maleBtn, #femaleBtn {
+        font-size: 24px;
+        padding: 12px 30px;
+        margin: 8px 0;
+    }
+    
+    .gender-buttons {
+        gap: 15px;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* 터치 디바이스 최적화 */
+@media (hover: none) and (pointer: coarse) {
+    .gender-btn {
+        min-width: 200px !important;
+        min-height: 60px !important;
+    }
+    
+    .back-btn {
+        min-width: 120px !important;
+        min-height: 40px !important;
+    }
+    
+    #maleBtn, #femaleBtn {
+        min-width: 150px !important;
+        min-height: 50px !important;
+        padding: 15px 25px !important;
+    }
+}

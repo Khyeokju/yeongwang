@@ -17,36 +17,37 @@ let currentQuestion = 0;
 let totalScore = 0;
 let answers = []; // 답변 기록 저장
 
-// 이미지 프리로딩 함수
-function preloadImages() {
-    const images = [];
-    for (let i = 1; i <= 10; i++) {
-        const img = new Image();
-        img.src = `../images/star${i}.png`;
-        images.push(img);
+// 다음 배경만 선행 로드 (전체 프리로딩 제거로 초기 로드 가볍게)
+let nextPreloadImg = null;
+function preloadNext(questionIdxZeroBased) {
+    const nextNum = questionIdxZeroBased + 2; // 현재가 0이면 다음은 2번째(파일명 star2)
+    if (nextNum <= 10) {
+        nextPreloadImg = new Image();
+        nextPreloadImg.src = `../images/star${nextNum}.png`;
+    } else {
+        nextPreloadImg = null;
     }
-    return images;
 }
+// 첫 진입 시 2번째 배경만 선행 로드
+preloadNext(0);
 
-// 페이지 로드 시 이미지 프리로딩
-const preloadedImages = preloadImages();
-
-// 배경 이미지 변경 함수
+// 배경 이미지 변경 함수 (최적화)
 function changeBackgroundImage(questionNumber) {
-    // 부드러운 배경 전환을 위한 fade 효과
-    document.body.style.transition = 'opacity 0.3s ease-in-out';
-    document.body.style.opacity = '0.3';
+    // 빠른 배경 전환
+    document.body.style.transition = 'opacity 0.15s ease-in-out';
+    document.body.style.opacity = '0.5';
     
-    setTimeout(() => {
+    // requestAnimationFrame을 사용한 부드러운 전환
+    requestAnimationFrame(() => {
         document.body.style.backgroundImage = `url("../images/star${questionNumber}.png")`;
         document.body.style.backgroundSize = 'cover';
         document.body.style.backgroundPosition = 'center';
         document.body.style.backgroundRepeat = 'no-repeat';
         
-        setTimeout(() => {
+        requestAnimationFrame(() => {
             document.body.style.opacity = '1';
-        }, 50);
-    }, 300);
+        });
+    });
 }
 
 // 분석 중 화면 표시 함수
@@ -92,18 +93,16 @@ function handleAnswer(answer) {
     
     // 다음 질문이 있으면 배경 이미지 변경
     if (currentQuestion < 10) {
-        // 프리로딩된 이미지 사용
-        const nextImage = preloadedImages[currentQuestion];
-        
-        if (nextImage.complete) {
-            // 이미 로드된 경우 즉시 전환
+        // 다음 배경만 선행 로드 후 교체
+        if (nextPreloadImg && nextPreloadImg.complete) {
             changeBackgroundImage(currentQuestion + 1);
+        } else if (nextPreloadImg) {
+            nextPreloadImg.onload = () => changeBackgroundImage(currentQuestion + 1);
         } else {
-            // 아직 로딩 중인 경우 로드 완료 후 전환
-            nextImage.onload = () => {
-                changeBackgroundImage(currentQuestion + 1);
-            };
+            changeBackgroundImage(currentQuestion + 1);
         }
+        // 그 다음 배경을 미리 로드 세팅
+        preloadNext(currentQuestion);
     } else {
         // 10번째 질문 완료 후 결과 페이지로 이동
         // 12가지 별자리가 균등하게 나올 수 있도록 설계
@@ -149,13 +148,13 @@ function handleAnswer(answer) {
         // 분석 중 화면 표시
         showAnalysisScreen();
         
-        // 결과를 localStorage에 저장하고 결과 페이지로 이동
+        // 결과를 localStorage에 저장하고 결과 페이지로 이동 (딜레이 단축)
         setTimeout(() => {
             localStorage.setItem('starResult', result);
             localStorage.setItem('starConstellation', result); // 별자리 이름도 별도로 저장
             localStorage.setItem('starPersonality', personality);
             location.href = './starresult.html';
-        }, 2000); // 2초 후 결과 페이지로 이동
+        }, 1000); // 2초 → 1초로 단축
     }
 }
 
