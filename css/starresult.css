@@ -44,7 +44,10 @@ body::before {
   align-items: center;
   justify-content: center;
   width: 100vw;
-  height: 100vh;
+  /* iOS Safari 주소창 대응: dvh 우선, svh 대체, 마지막으로 --vh 폴백 */
+  height: 100dvh;
+  height: 100svh;
+  height: calc(var(--vh, 1vh) * 100);
   position: relative;
   overflow: hidden;
   background: radial-gradient(ellipse at center, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.4) 100%);
@@ -53,7 +56,9 @@ body::before {
 
 #result-bg {
   position: relative;
-  height: 100vh;
+  height: 100dvh;
+  height: 100svh;
+  height: calc(var(--vh, 1vh) * 100);
   object-fit: cover;
   z-index: 0;
   filter: brightness(1.1) contrast(1.05) saturate(1.1);
@@ -157,16 +162,17 @@ body::before {
 
 #qrcode {
   position: absolute;
-  top: 40%;
-  right: 8%;
+  top: 50%;
+  right: 4%;
   z-index: 2;
-  transform: scale(1.2);
+  transform: translateY(-50%) scale(1.4);
+  transform-origin: right center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background: rgba(100, 149, 237, 0.1);
-  padding: 30px;
+  padding: 45px;
   border-radius: 12px;
   backdrop-filter: blur(10px);
   border: 2px solid rgba(100, 149, 237, 0.4);
@@ -184,7 +190,7 @@ body::before {
   box-shadow: 
     0 12px 35px rgba(0, 0, 0, 0.4),
     inset 0 2px 15px rgba(255, 255, 255, 0.3);
-  transform: scale(1.1);
+  transform: translateY(-50%) scale(1.1);
 }
 
 /* QR코드 내부 이미지 크기 제한 */
@@ -382,9 +388,10 @@ body::before {
     }
     
     #qrcode {
-        top: 25%;
-        right: 5%;
-        transform: scale(0.8);
+        top: 50%;
+        right: 3%;
+        transform: translateY(-50%) scale(0.9);
+        transform-origin: right center;
         width: 150px;
         height: 150px;
         overflow: visible;
@@ -439,9 +446,10 @@ body::before {
     }
     
     #qrcode {
-        top: 20%;
-        right: 3%;
-        transform: scale(0.7);
+        top: 50%;
+        right: 2%;
+        transform: translateY(-50%) scale(0.8);
+        transform-origin: right center;
         width: 120px;
         height: 120px;
         overflow: visible;
@@ -518,8 +526,8 @@ body::before {
 /* Home 버튼 */
 .home-btn {
     position: fixed !important;
-    right: 40px !important;
-    top: 1020px !important;
+    right: 20px !important;
+    bottom: calc(env(safe-area-inset-bottom) + 20px) !important;
     z-index: 10000 !important;
     background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%) !important;
     box-shadow: 
@@ -538,11 +546,11 @@ body::before {
         inset 0 2px 15px rgba(255, 255, 255, 0.4) !important;
 }
 
-/* 아이패드에서 Home 버튼 더 잘 보이게 */
+/* 아이패드에서 Home 버튼 크기/여백 보정 */
 @media screen and (max-width: 1024px) {
     .home-btn {
-        right: 20px !important;
-        top: 20px !important;
+        right: 16px !important;
+        bottom: calc(env(safe-area-inset-bottom) + 16px) !important;
         font-size: 24px !important;
         padding: 8px 20px !important;
         min-width: 120px !important;
@@ -550,7 +558,6 @@ body::before {
         z-index: 10001 !important;
         position: fixed !important;
     }
-    
     .home-btn span {
         font-size: 30px !important;
     }
@@ -559,8 +566,8 @@ body::before {
 /* 아이패드 세로 모드에서 홈버튼 위치 조절 */
 @media screen and (max-width: 1024px) and (orientation: portrait) {
     .home-btn {
-        right: 15px !important;
-        top: 15px !important;
+        right: 12px !important;
+        bottom: calc(env(safe-area-inset-bottom) + 12px) !important;
         min-width: 100px !important;
         min-height: 35px !important;
     }
@@ -569,8 +576,8 @@ body::before {
 /* 아이패드 가로 모드에서 홈버튼 위치 조절 */
 @media screen and (max-width: 1024px) and (orientation: landscape) {
     .home-btn {
-        right: 25px !important;
-        top: 10px !important;
+        right: 20px !important;
+        bottom: calc(env(safe-area-inset-bottom) + 12px) !important;
         min-width: 110px !important;
         min-height: 38px !important;
     }
