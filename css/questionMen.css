@@ -2,14 +2,21 @@
 /* Amatic SC (영문 필기체) + 나눔펜스크립트 (한글 손글씨) */
 @import url('https://fonts.googleapis.com/css2?family=Amatic+SC&family=Nanum+Pen+Script&display=swap');
 
+html { height: 100%; overflow: auto; background-color: #000; }
+
 body {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
   margin: 0;
-  height: 100%;
+  padding: 0;
+  height: 100svh;
   background-image: url("../images/camping2.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-attachment: scroll;
+  overflow: hidden;
   font-family: 'Amatic SC', 'Nanum Pen Script', cursive;
 }
 
@@ -183,7 +190,7 @@ body {
 }
 .back-button {
   position: fixed;
-  bottom: 30px;
+  bottom: 60px;
   right: 30px;
   padding: 12px 24px;
   font-size: 40px;

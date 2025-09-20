@@ -1,2 +1,11 @@
 // index.html용 JavaScript
-// 현재는 별도의 로직이 필요하지 않으므로 빈 파일로 생성
+// PWA 서비스 워커 등록
+(function(){
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('/sw.js').catch(function(err){
+        console.log('SW 등록 실패:', err);
+      });
+    });
+  }
+})();

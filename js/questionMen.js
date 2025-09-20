@@ -54,6 +54,33 @@ const questions = [
 let currentQuestion = 0;
 let responses = [];
 
+// 다음 배경만 선행 로드 (전체 프리로딩은 지양)
+let nextPreloadImg = null;
+function preloadNext(questionIdxZeroBased) {
+  const nextNum = questionIdxZeroBased + 2;
+  if (nextNum <= 10) {
+    nextPreloadImg = new Image();
+    nextPreloadImg.src = `../images/man${nextNum}.png`;
+  } else {
+    nextPreloadImg = null;
+  }
+}
+
+function changeBackgroundImage(questionNumber) {
+  document.body.style.transition = 'opacity 0.15s ease-in-out';
+  document.body.style.opacity = '0.5';
+  requestAnimationFrame(() => {
+    document.body.style.backgroundImage = `url("../images/man${questionNumber}.png")`;
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    requestAnimationFrame(() => {
+      document.body.style.opacity = '1';
+    });
+  });
+}
+
+preloadNext(0);
 
 function renderQuestion() {
   const q = questions[currentQuestion];
@@ -101,6 +128,7 @@ const scores = [
 
 
 let totalScore = 0;  // 전역에서 누적
+let egenCount = 0;   // 에겐 응답 개수
 
 // 분석 중 화면 표시 함수
 function showAnalysisScreen() {
@@ -130,9 +158,20 @@ function showAnalysisScreen() {
 }
 
 function handleAnswer(selectedIndex) {
+  // 에겐 응답 규칙(남자):
+  // 1,2,3,4,6,8,10번은 yes가 에겐 / 5,7,9번은 no가 에겐
   const q = questions[currentQuestion];
   const scoreForThisAnswer = scores[currentQuestion][selectedIndex]; // 해당 선택지 점수
   totalScore += scoreForThisAnswer;
+
+  const qIndex = currentQuestion; // 0-based
+  const oneBased = qIndex + 1;
+  const isYes = selectedIndex === 0;
+  const egenYesSet = new Set([1,2,3,4,6,8,10]);
+  const egenNoSet = new Set([5,7,9]);
+  if ((egenYesSet.has(oneBased) && isYes) || (egenNoSet.has(oneBased) && !isYes)) {
+    egenCount++;
+  }
 
   responses.push({ question: q.question, answer: q.answers[selectedIndex] });
   currentQuestion++;
@@ -145,20 +184,33 @@ function handleAnswer(selectedIndex) {
   // 최소한의 딜레이로 즉시 처리
   requestAnimationFrame(() => {
     if (currentQuestion < questions.length) {
+      if (nextPreloadImg && nextPreloadImg.complete) {
+        changeBackgroundImage(currentQuestion + 1);
+      } else if (nextPreloadImg) {
+        nextPreloadImg.onload = () => changeBackgroundImage(currentQuestion + 1);
+      } else {
+        changeBackgroundImage(currentQuestion + 1);
+      }
+      preloadNext(currentQuestion);
       renderQuestion();
     } else {
       // 분석 중 화면 표시
       showAnalysisScreen();
       
-      // 결과를 localStorage에 저장하고 결과 페이지로 이동 (딜레이 단축)
+      // 결과를 저장하고 결과 페이지로 이동 (1초)
       setTimeout(() => {
         localStorage.setItem("responses", JSON.stringify(responses));
-        localStorage.setItem("tetoScore", totalScore); // 점수 저장
+        localStorage.setItem("tetoScore", totalScore);
+        localStorage.setItem("egenCount", egenCount);
         window.location.href = "result.html";
-      }, 1000); // 2초 → 1초로 단축
+      }, 1000);
     }
   });
 }
 
 
-window.onload = renderQuestion;
+window.onload = function() {
+  try { localStorage.removeItem('egenCount'); } catch (e) {}
+  egenCount = 0;
+  renderQuestion();
+};

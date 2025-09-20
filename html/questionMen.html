@@ -2,8 +2,27 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="에겐테토" />
   <title>심리 테스트</title>
-  <link rel="stylesheet" href="../css/questionMen.css">
+  <link rel="apple-touch-icon" href="/images/start.png" />
+  <link rel="stylesheet" href="../css/questionMen.css?v=20250914-3">
+  <script>
+    (function(){
+      function setVh(){
+        var vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', vh + 'px');
+      }
+      setVh();
+      window.addEventListener('resize', setVh);
+      window.addEventListener('orientationchange', function(){ setTimeout(setVh, 200); });
+      window.addEventListener('scroll', function(){ setVh(); }, {passive:true});
+    })();
+  </script>
 </head>
 <body>
   <div class="situation-header">

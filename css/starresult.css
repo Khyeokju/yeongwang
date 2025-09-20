@@ -1,9 +1,10 @@
 /* Google Fonts - 별자리 테마에 맞는 폰트 */
 @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 
-body {
+html, html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
   font-family: 'Noto Sans KR', 'Amatic SC', sans-serif;
   overflow: hidden;
   background: linear-gradient(135deg, #0c1445 0%, #1a237e 50%, #283593 100%);
@@ -39,16 +40,13 @@ body::before {
 }
 
 .container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100vw;
-  /* iOS Safari 주소창 대응: dvh 우선, svh 대체, 마지막으로 --vh 폴백 */
-  height: 100dvh;
-  height: 100svh;
-  height: calc(var(--vh, 1vh) * 100);
-  position: relative;
+  height: 100vh;
   overflow: hidden;
   background: radial-gradient(ellipse at center, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.4) 100%);
   backdrop-filter: blur(1px);
@@ -56,9 +54,7 @@ body::before {
 
 #result-bg {
   position: relative;
-  height: 100dvh;
-  height: 100svh;
-  height: calc(var(--vh, 1vh) * 100);
+  height: 100vh;
   object-fit: cover;
   z-index: 0;
   filter: brightness(1.1) contrast(1.05) saturate(1.1);
@@ -75,8 +71,8 @@ body::before {
 #photo-box {
   position: absolute;
   top: 18.7%;
-  left: 35%;
-  width: 30%;
+  left: 33%;
+  width: 34%;
   height: 36%;
   z-index: 1;
   overflow: hidden;
@@ -163,16 +159,16 @@ body::before {
 #qrcode {
   position: absolute;
   top: 50%;
-  right: 4%;
+  right: 6%;
   z-index: 2;
-  transform: translateY(-50%) scale(1.4);
+  transform: translateY(-50%);
   transform-origin: right center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background: rgba(100, 149, 237, 0.1);
-  padding: 45px;
+  padding: 80px;
   border-radius: 12px;
   backdrop-filter: blur(10px);
   border: 2px solid rgba(100, 149, 237, 0.4);
@@ -180,9 +176,71 @@ body::before {
     0 8px 25px rgba(0, 0, 0, 0.3),
     inset 0 2px 10px rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
-  width: 150px;
-  height: 150px;
+  width: clamp(180px, 18vw, 320px);
+  height: clamp(180px, 18vw, 320px);
   overflow: visible;
+}
+
+#qrcode .action-buttons {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 0;
+  left: auto;
+  transform: none;
+  display: none;
+  gap: 12px;
+  z-index: 3;
+}
+#qrcode .action-buttons.show { display: flex; }
+
+/* 액션 버튼을 홈 버튼과 유사한 형태로 축소/정렬 */
+#qrcode .action-buttons .btn {
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%) !important;
+  padding: 10px 20px !important;
+  min-height: 40px !important;
+  min-width: 120px !important;
+  border-radius: 16px !important;
+  font-size: 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 
+    0 8px 25px rgba(74, 144, 226, 0.4),
+    inset 0 2px 10px rgba(255, 255, 255, 0.3) !important;
+}
+
+#qrcode .action-buttons .btn span {
+  font-size: 28px !important;
+  display: inline-block !important;
+  width: auto !important;
+  height: auto !important;
+  line-height: 1 !important;
+}
+
+/* 홈버튼 형태와 동일하게 ::after 하이라이트 제거 */
+#qrcode .action-buttons .btn::after { 
+  display: none !important; 
+}
+
+#action-buttons {
+  position: absolute;
+  bottom: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 16px;
+  z-index: 3;
+}
+
+.retake-btn { background-color: #8e44ad !important; }
+.generate-btn { background-color: #4a90e2 !important; }
+
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+  #action-buttons { bottom: 5%; gap: 12px; }
+}
+
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+  #action-buttons { bottom: 4%; gap: 10px; }
 }
 
 #qrcode:hover {
@@ -190,13 +248,12 @@ body::before {
   box-shadow: 
     0 12px 35px rgba(0, 0, 0, 0.4),
     inset 0 2px 15px rgba(255, 255, 255, 0.3);
-  transform: translateY(-50%) scale(1.1);
 }
 
 /* QR코드 내부 이미지 크기 제한 */
 #qrcode img {
-  max-width: 60%;
-  max-height: 60%;
+  max-width: 70%;
+  max-height: 70%;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -223,9 +280,12 @@ body::before {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 0.8rem;
+  font-size: clamp(0.5rem, 1.2vw, 1.2rem);
   color: #666;
   text-align: center;
+  max-width: 90%;
+  line-height: 1.2;
+  pointer-events: none;
 }
 
 /* QR코드가 활성화되면 안내문구 숨김 */
@@ -382,18 +442,18 @@ body::before {
     /* 아이패드 세로 모드 */
     #photo-box {
         top: 20%;
-        left: 35%;
-        width: 30%;
+        left: 32.5%;
+        width: 35%;
         height: 32%;
     }
     
     #qrcode {
         top: 50%;
         right: 3%;
-        transform: translateY(-50%) scale(0.9);
+        transform: translateY(-50%);
         transform-origin: right center;
-        width: 150px;
-        height: 150px;
+        width: clamp(140px, 14vw, 260px);
+        height: clamp(140px, 14vw, 260px);
         overflow: visible;
     }
     
@@ -440,18 +500,18 @@ body::before {
     /* 아이패드 가로 모드 */
     #photo-box {
         top: 15%;
-        left: 32%;
-        width: 28%;
+        left: 34%;
+        width: 32.5%;
         height: 30%;
     }
     
     #qrcode {
         top: 50%;
         right: 2%;
-        transform: translateY(-50%) scale(0.8);
+        transform: translateY(-50%);
         transform-origin: right center;
-        width: 120px;
-        height: 120px;
+        width: clamp(120px, 12vw, 220px);
+        height: clamp(120px, 12vw, 220px);
         overflow: visible;
     }
     

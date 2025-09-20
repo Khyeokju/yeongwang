@@ -1,6 +1,33 @@
-// 테스트 중이므로 Firebase 업로드 비활성화
-// firebase.initializeApp(window.__FIREBASE_CONFIG__);
-// const storage = firebase.storage();
+// QR 코드 업로드 활성화
+firebase.initializeApp(window.__FIREBASE_CONFIG__);
+const storage = firebase.storage();
+
+// 프레임별 카메라 박스 위치/크기 프리셋 (필요 시 숫자만 조정)
+const DEFAULT_PHOTO_BOX = { top: '18.7%', left: '35%', width: '30%', height: '36%' };
+const PHOTO_BOX_PRESETS = {
+  '010.png': { ...DEFAULT_PHOTO_BOX },
+  '011.png': { ...DEFAULT_PHOTO_BOX },
+  '012.png': { ...DEFAULT_PHOTO_BOX },
+  '013.png': { ...DEFAULT_PHOTO_BOX },
+  '014.png': { ...DEFAULT_PHOTO_BOX },
+  '015.png': { ...DEFAULT_PHOTO_BOX },
+  '016.png': { ...DEFAULT_PHOTO_BOX },
+  '017.png': { ...DEFAULT_PHOTO_BOX },
+  '018.png': { ...DEFAULT_PHOTO_BOX },
+  '019.png': { ...DEFAULT_PHOTO_BOX },
+  '020.png': { ...DEFAULT_PHOTO_BOX },
+  '021.png': { ...DEFAULT_PHOTO_BOX }
+};
+
+function applyPhotoBoxPresetByFrame(frameFileName) {
+  const preset = PHOTO_BOX_PRESETS[frameFileName] || DEFAULT_PHOTO_BOX;
+  const box = document.getElementById('photo-box');
+  if (!box) return;
+  box.style.top = preset.top;
+  box.style.left = preset.left;
+  box.style.width = preset.width;
+  box.style.height = preset.height;
+}
 
 function initCameraAndCapture() {
   const video = document.getElementById("webcam");
@@ -71,18 +98,68 @@ function initCameraAndCapture() {
         img.style.display = "block";
         countdownEl.style.display = "none";
 
-        // QR코드 영역 초기화 및 안내문구 제거
+        // 버튼 표시: 재촬영 / QR 생성하기
+        let actions = document.getElementById("action-buttons");
         const qrContainer = document.getElementById("qrcode");
-        qrContainer.innerHTML = "";
-        qrContainer.classList.add("qr-active"); // 안내문구 숨기는 클래스 추가
+        const photoArea = document.getElementById("photo-area");
+        const qrcodeEl = document.getElementById("qrcode");
+        // 버튼 DOM이 없으면 생성 (우선 qrcode 내부에 삽입)
+        if (!actions && (qrcodeEl || photoArea)) {
+          actions = document.createElement("div");
+          actions.id = "action-buttons";
+          actions.className = "action-buttons";
+          const retakeBtnEl = document.createElement("button");
+          retakeBtnEl.id = "retake-btn";
+          retakeBtnEl.className = "btn retake-btn";
+          retakeBtnEl.innerHTML = '<span>재촬영</span>';
+          const genBtnEl = document.createElement("button");
+          genBtnEl.id = "generate-qr-btn";
+          genBtnEl.className = "btn generate-btn";
+          genBtnEl.innerHTML = '<span>QR코드 생성하기</span>';
+          actions.appendChild(retakeBtnEl);
+          actions.appendChild(genBtnEl);
+          if (qrcodeEl) {
+            qrcodeEl.appendChild(actions);
+          } else if (photoArea) {
+            photoArea.appendChild(actions);
+          }
+        }
+        if (actions) {
+          actions.classList.add("show");
+          const retakeBtn = document.getElementById("retake-btn");
+          const genBtn = document.getElementById("generate-qr-btn");
 
-        console.log("전체 프레임 업로드 시작");
-        showQRLoading(); // 로딩 표시 함수 호출
-        // 테스트 중이므로 Firebase 업로드 비활성화
-        // captureFullFrameAndUpload();
-        showTestQR(); // 테스트용 QR코드 표시
+          if (retakeBtn) {
+            retakeBtn.onclick = () => {
+              // UI 리셋
+              const videoEl = document.getElementById("webcam");
+              if (videoEl) videoEl.style.display = "block";
+              img.style.display = "none";
+              countdownEl.style.display = "block";
+              actions.classList.remove("show");
+              if (qrContainer) {
+                qrContainer.classList.remove("qr-active");
+                qrContainer.innerHTML = "";
+              }
+              // 재촬영 시작
+              initCameraAndCapture();
+            };
+          }
+
+          if (genBtn) {
+            genBtn.onclick = () => {
+              actions.classList.remove("show");
+              if (qrContainer) {
+                qrContainer.classList.add("qr-active");
+              }
+              actions.style.display = "none";
+              showQRLoading();
+              captureFullFrameAndUpload();
+            };
+          }
+        }
       }
-    }, 2000);
+    }, 1000);
   }).catch(err => {
     console.error("카메라 접근 실패:", err);
     alert("카메라에 접근할 수 없습니다. 카메라 권한을 확인해주세요.");
@@ -130,7 +207,7 @@ function captureFullFrameAndUpload() {
           const qr = new QRious({
             element: document.createElement("canvas"),
             value: downloadURL,
-            size: 220
+            size: 260
           });
 
           const qrContainer = document.getElementById("qrcode");
@@ -144,9 +221,7 @@ function captureFullFrameAndUpload() {
             <div style="font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
               ✨ 별자리 결과를 저장하세요 ✨
             </div>
-            <div style="font-size: 0.9rem; color: #e8f4fd; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
-              QR코드를 스캔하여<br>나만의 별자리 사진을 다운로드
-            </div>
+            <div style=\"font-size: 0.9rem; color: #e8f4fd; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);\">\n              QR코드를 스캔하여<br>나만의 별자리 사진을 다운로드\n            </div>
           `;
           qrContainer.appendChild(text);
         }).catch(err => {
@@ -256,6 +331,9 @@ function displayStarResult() {
     // 결과 배경 이미지를 별자리에 맞는 프레임으로 변경
     const resultBg = document.getElementById('result-bg');
     const frameImage = constellationFrames[constellation] || '010.png';
+
+    // 프리셋 적용 (이미지 로딩 전에 위치 선적용)
+    applyPhotoBoxPresetByFrame(frameImage);
     
     // 이미지 로딩 완료 후 카메라 초기화
     resultBg.onload = function() {

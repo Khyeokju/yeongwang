@@ -115,11 +115,11 @@ body {
 .start-btn {
     cursor: pointer !important;
     transition: transform 0.3s ease !important;
-    width: 350px !important;
+    width: 300px !important;
     height: auto !important;
-    margin-top: 400px !important;
+    margin-top: 320px !important;
     max-width: none !important;
-    min-width: 350px !important;
+    min-width: 300px !important;
 }
 
 .start-btn:hover {
@@ -262,7 +262,7 @@ body {
     
     .start-btn {
         width: 280px !important;
-        margin-top: 300px !important;
+        margin-top: 240px !important;
     }
     
     .left-button {
@@ -298,7 +298,7 @@ body {
     
     .start-btn {
         width: 250px !important;
-        margin-top: 200px !important;
+        margin-top: 160px !important;
     }
     
     .left-button {
@@ -334,7 +334,7 @@ body {
     
     .start-btn {
         width: 320px !important;
-        margin-top: 350px !important;
+        margin-top: 300px !important;
     }
     
     .left-button {
@@ -370,7 +370,7 @@ body {
     
     .start-btn {
         width: 250px !important;
-        margin-top: 250px !important;
+        margin-top: 220px !important;
     }
     
     .left-button {

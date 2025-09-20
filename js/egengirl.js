@@ -16,6 +16,43 @@ const scores = [
 ];
 
 let totalScore = 0;
+let egenCount = 0; // 에겐 응답 개수
+(function(){ try{ localStorage.removeItem('egenCount'); }catch(e){} })();
+
+// 다음 배경만 선행 로드 (가벼운 프리로딩)
+let nextPreloadImg = null;
+function preloadNext(questionIdxZeroBased) {
+  const nextNum = questionIdxZeroBased + 2; // 현재가 0이면 다음은 2 (girl2)
+  if (nextNum <= 10) {
+    nextPreloadImg = new Image();
+    nextPreloadImg.src = `../images/girl${nextNum}.png`;
+  } else {
+    nextPreloadImg = null;
+  }
+}
+// 첫 진입 시 2번째 배경만 선행 로드
+preloadNext(0);
+
+// 별자리 페이지와 동일한 방식의 배경 전환
+function changeBackgroundImage(questionNumber) {
+  document.body.style.transition = 'opacity 0.15s ease-in-out';
+  document.body.style.opacity = '0.5';
+  requestAnimationFrame(() => {
+    // 화면 전체 배경 전환 보장: html + body 모두 변경
+    document.documentElement.style.backgroundImage = `url("../images/girl${questionNumber}.png")`;
+    document.documentElement.style.backgroundSize = 'cover';
+    document.documentElement.style.backgroundPosition = 'center';
+    document.documentElement.style.backgroundRepeat = 'no-repeat';
+
+    document.body.style.backgroundImage = `url("../images/girl${questionNumber}.png")`;
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    requestAnimationFrame(() => {
+      document.body.style.opacity = '1';
+    });
+  });
+}
 
 // 분석 중 화면 표시 함수
 function showAnalysisScreen() {
@@ -45,8 +82,17 @@ function showAnalysisScreen() {
 }
 
 function handleAnswer(selectedIndex) {
+  // 여자 에겐 규칙: 1,2,3,4,6,8,10 = yes가 에겐 / 5,7,9 = no가 에겐
   const scoreForThisAnswer = scores[currentQuestion][selectedIndex];
   totalScore += scoreForThisAnswer;
+
+  const oneBased = currentQuestion + 1;
+  const isYes = selectedIndex === 0;
+  const egenYesSet = new Set([1,2,3,4,6,8,10]);
+  const egenNoSet = new Set([5,7,9]);
+  if ((egenYesSet.has(oneBased) && isYes) || (egenNoSet.has(oneBased) && !isYes)) {
+    egenCount++;
+  }
 
   // 답변 기록 저장 (yes/no)
   answers[currentQuestion] = selectedIndex === 0 ? 'yes' : 'no';
@@ -55,13 +101,16 @@ function handleAnswer(selectedIndex) {
   currentQuestion++;
 
   if (currentQuestion < scores.length) {
-    // 배경 이미지만 변경 (부드러운 전환)
-    const nextImageNumber = currentQuestion + 1;
-    document.body.style.opacity = '0.7';
-    setTimeout(() => {
-      document.body.style.backgroundImage = `url("../images/girl${nextImageNumber}.png")`;
-      document.body.style.opacity = '1';
-    }, 200);
+    // 다음 배경을 선행 로드 후 전체 배경 전환
+    if (nextPreloadImg && nextPreloadImg.complete) {
+      changeBackgroundImage(currentQuestion + 1);
+    } else if (nextPreloadImg) {
+      nextPreloadImg.onload = () => changeBackgroundImage(currentQuestion + 1);
+    } else {
+      changeBackgroundImage(currentQuestion + 1);
+    }
+    // 그 다음 배경 프리로드 준비
+    preloadNext(currentQuestion);
   } else {
     // 분석 중 화면 표시
     showAnalysisScreen();
@@ -70,6 +119,8 @@ function handleAnswer(selectedIndex) {
     setTimeout(() => {
       localStorage.setItem("responses", JSON.stringify(responses));
       localStorage.setItem("tetoScore", totalScore);
+      localStorage.setItem("egenCount", String(egenCount));
+      localStorage.setItem('gender', 'female');
       window.location.href = "result.html";
     }, 2000); // 2초 후 결과 페이지로 이동
   }
@@ -98,11 +149,7 @@ function goBack() {
     
     // 이전 질문 배경으로 변경 (부드러운 전환)
     const prevImageNumber = currentQuestion + 1;
-    document.body.style.opacity = '0.7';
-    setTimeout(() => {
-      document.body.style.backgroundImage = `url("../images/girl${prevImageNumber}.png")`;
-      document.body.style.opacity = '1';
-    }, 200);
+    changeBackgroundImage(prevImageNumber);
   }
 }
 

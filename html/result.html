@@ -3,8 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="에겐테토" />
   <title>최종 결과</title>
-  <link rel="stylesheet" href="../css/result.css" />
+  <link rel="apple-touch-icon" href="/images/start.png" />
+  <link rel="stylesheet" href="../css/result.css?v=20250915-1" />
 
   <!-- Firebase SDK -->
   <script src="../js/config.js"></script>
@@ -36,25 +42,24 @@
   <div class="container">
     <div id="capture-area">
       <img src="../images/egen2.png" id="result-bg" alt="결과 배경" crossorigin="anonymous" />
-
       <div id="photo-area">
         <div id="countdown">7</div>
-
         <div id="photo-box">
           <video id="webcam" autoplay playsinline></video>
           <canvas id="snapshot" style="display:none;"></canvas>
           <img id="captured-image" alt="캡처된 이미지" style="display:none;" />
         </div>
-
-       <div id="qrcode"></div>
+        <div id="qrcode">
+          <div id="action-buttons" class="action-buttons">
+            <button id="retake-btn" class="btn retake-btn"><span>재촬영</span></button>
+            <button id="generate-qr-btn" class="btn generate-btn"><span>QR코드 생성하기</span></button>
+          </div>
+        </div>
+      </div>
     </div>
+    <div id="description-box"></div>
   </div>
-</div>
-      <div id="description-box"></div>
-    </div>
-  </div>
-<button class="btn home-btn" onclick="location.href='../index.html'"><span>HOME</span></button>
-
-  <script src="../js/result.js"></script>
+  <button class="btn home-btn" onclick="location.href='../index.html'"><span>HOME</span></button>
+  <script src="../js/result.js?v=20250915-1"></script>
 </body>
 </html>
