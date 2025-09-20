@@ -33,8 +33,8 @@
 
 ## 📚 프로젝트 구조
 
-<img width="827" height="740" alt="image" src="https://github.com/user-attachments/assets/6e2ae090-3179-49af-86c7-49db7673a1e4" />
-<img width="1348" height="639" alt="image" src="https://github.com/user-attachments/assets/cc3bc60e-12dd-4851-a0b0-aae7ef6641d4" />
+<img width="1085" height="747" alt="image" src="https://github.com/user-attachments/assets/f1778fea-46c3-4450-96ae-1041ce11caa4" />
+<img width="1022" height="578" alt="image" src="https://github.com/user-attachments/assets/e44fd012-286a-42e7-a174-54f536869af6" />
 
 ## 프로젝트 실행 화면
 
